@@ -2,8 +2,12 @@
 
 import { ref } from 'vue'
 
+let id = 0;
 
-const tasks = ref([{message: 'Foo' }, { message: 'Bar' }])
+const tasks = ref([
+  {id: id++, message: 'Foo', done: false },
+  {id: id++, message: 'Bar', done: true},
+])
 const inputText = ref('');
 
 
@@ -12,7 +16,9 @@ const addTask = () => {
 {
 
   const newValue = {
-    message: inputText.value
+    id: id++,
+    message: inputText.value,
+    done: false
   }
   tasks.value.push(newValue);
 
@@ -40,12 +46,31 @@ function removeTask(event)
 
   <div>
     <ul>
-      <li v-for="(task, index) in tasks" :key="index" style="display: flex;">
-        <p>{{ task.message }}</p>
-        <button @click="removeTask(task)">x</button>
+      <li v-for="(task, index) in tasks" :key="index" style="display: flex; flex-direction: row; ">
+
+        <input type="checkbox" v-model="task.done">
+
+        <p :class="{done : task.done}" style="margin: 5px;">{{ task.message }}</p>
+
+        <div style="display: flex; align-items: center; justify-content: center; margin: 5px;">
+          <button @click="removeTask(task)" :class="taskBtn">x</button>
+        </div>
+        
+
       </li>
     </ul>
   </div>
   
   
 </template>
+
+<style>
+  .done {
+    text-decoration: line-through;
+  }
+  .taskBtn {
+    width: fit-content;
+    height: fit-content;
+  }
+
+</style>
