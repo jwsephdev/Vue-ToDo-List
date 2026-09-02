@@ -3,11 +3,7 @@
 import { ref } from 'vue'
 
 let id = 0;
-
-const tasks = ref([
-  {id: id++, message: 'Foo', done: false },
-  {id: id++, message: 'Bar', done: true},
-])
+const tasks = ref([])
 const inputText = ref('');
 
 
@@ -45,6 +41,10 @@ function removeTask(event)
   </div>
 
   <div>
+
+    <p v-if="tasks.length === 0">No tasks here</p>
+    <p v-else></p>
+
     <ul>
       <li v-for="(task, index) in tasks" :key="index" style="display: flex; flex-direction: row; ">
 
