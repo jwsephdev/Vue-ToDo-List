@@ -3,7 +3,7 @@
 import { ref } from 'vue'
 
 let id = 0;
-const tasks = ref([])
+const tasks = ref(JSON.parse(localStorage.getItem('tasks')) || [])
 const inputText = ref('');
 
 
@@ -17,6 +17,7 @@ const addTask = () => {
     done: false
   }
   tasks.value.push(newValue);
+  localStorage.setItem('tasks', JSON.stringify(tasks.value))
 
   inputText.value = '';
 }
@@ -26,6 +27,7 @@ const addTask = () => {
 function removeTask(event)
 {
   tasks.value = tasks.value.filter((t) => t !== event);
+  localStorage.setItem('tasks', JSON.stringify(tasks.value))
 }
 
 </script>
